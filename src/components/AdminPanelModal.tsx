@@ -610,7 +610,7 @@ export const AdminPanelModal: React.FC = () => {
       category: seriesForm.category,
       badgeLabel: seriesForm.badgeLabel || `মুভি সিরিজ • ${cleanEpisodes.length} পর্ব`,
       badgeColor: seriesForm.badgeColor || 'blue',
-      poster: seriesForm.poster?.trim() || 'https://images.unsplash.com/photo-1518676590629-3dcbd9c5a5c9?w=300',
+      poster: seriesForm.poster?.trim() || cleanEpisodes[0]?.thumbnail || 'https://images.unsplash.com/photo-1518676590629-3dcbd9c5a5c9?w=300',
       year: seriesForm.year || '2026',
       quality: seriesForm.quality || '1080p [HD]',
       description: seriesForm.description?.trim() || '',

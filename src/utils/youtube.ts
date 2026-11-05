@@ -18,19 +18,24 @@ export function extractYouTubeId(urlOrId: string): string {
   return match && match[1] ? match[1] : '';
 }
 
-export function getYouTubeThumbnail(youtubeId: string, customThumbnail?: string): string {
-  if (customThumbnail && customThumbnail.trim().startsWith('http')) {
+/**
+ * Returns the automatic official YouTube video thumbnail.
+ * If YouTube ID/URL exists, it automatically returns YouTube's hqdefault thumbnail.
+ */
+export function getYouTubeThumbnail(urlOrId: string, customThumbnail?: string): string {
+  const cleanId = extractYouTubeId(urlOrId);
+  if (cleanId) {
+    // Official YouTube High-Quality Thumbnail
+    return `https://img.youtube.com/vi/${cleanId}/hqdefault.jpg`;
+  }
+  if (customThumbnail && customThumbnail.trim().startsWith('http') && !customThumbnail.includes('unsplash.com')) {
     return customThumbnail.trim();
   }
-  const cleanId = extractYouTubeId(youtubeId);
-  if (!cleanId) {
-    return 'https://images.unsplash.com/photo-1574375927938-d5a98e8ffe85?w=600&auto=format&fit=crop&q=80';
-  }
-  return `https://img.youtube.com/vi/${cleanId}/hqdefault.jpg`;
+  return 'https://images.unsplash.com/photo-1574375927938-d5a98e8ffe85?w=600&auto=format&fit=crop&q=80';
 }
 
-export function getYouTubeEmbedUrl(youtubeId: string, autoplay = true): string {
-  const cleanId = extractYouTubeId(youtubeId);
+export function getYouTubeEmbedUrl(youtubeIdOrUrl: string, autoplay = true): string {
+  const cleanId = extractYouTubeId(youtubeIdOrUrl);
   if (!cleanId) return '';
   return `https://www.youtube-nocookie.com/embed/${cleanId}?autoplay=${autoplay ? 1 : 0}&rel=0&modestbranding=1&playsinline=1&enablejsapi=1`;
 }

@@ -1,10 +1,10 @@
 import React from 'react';
 import { useMovieContext } from '../context/MovieContext';
 import { ChevronLeft, Play, Film } from 'lucide-react';
-import { getYouTubeThumbnail } from '../utils/youtube';
+import { getYouTubeThumbnail, extractYouTubeId } from '../utils/youtube';
 
 export const SeriesDetailModal: React.FC = () => {
-  const { selectedSeries, setSelectedSeries, selectedEpisode, setSelectedEpisode } = useMovieContext();
+  const { selectedSeries, setSelectedSeries, selectedEpisode, setSelectedEpisode, settings } = useMovieContext();
 
   // If no series is selected, or if player modal is currently playing an episode, hide detail modal
   if (!selectedSeries || selectedEpisode) return null;
@@ -18,33 +18,45 @@ export const SeriesDetailModal: React.FC = () => {
         className="w-full max-w-md bg-gray-50 min-h-screen flex flex-col shadow-2xl relative border-x border-gray-200"
         onClick={(e) => e.stopPropagation()}
       >
-        {/* Top Header - Matching Screenshot 1 style */}
-        <div className="sticky top-0 z-20 bg-white/95 backdrop-blur-md px-4 py-3 flex items-center justify-between border-b border-gray-200 shadow-2xs">
-          <div className="flex items-center gap-2.5">
-            <button
-              onClick={() => setSelectedSeries(null)}
-              className="w-8 h-8 rounded-full bg-gray-100 hover:bg-gray-200 text-gray-700 flex items-center justify-center transition-colors cursor-pointer"
-              title="ফিরে যান"
+        {/* Top Header - Erased text, centered app logo with back button */}
+        <div className="sticky top-0 z-20 bg-white/95 backdrop-blur-md px-3.5 py-2.5 flex items-center justify-between border-b border-gray-200 shadow-2xs">
+          <button
+            onClick={() => setSelectedSeries(null)}
+            className="w-8 h-8 rounded-full bg-gray-100 hover:bg-gray-200 text-gray-700 flex items-center justify-center transition-colors cursor-pointer shrink-0 shadow-2xs"
+            title="ফিরে যান"
+          >
+            <ChevronLeft className="w-5 h-5 text-gray-700" />
+          </button>
+
+          {/* Centered App Logo */}
+          <div className="flex items-center justify-center cursor-pointer" onClick={() => setSelectedSeries(null)}>
+            {settings?.headerLogoUrl ? (
+              <img
+                src={settings.headerLogoUrl}
+                alt={settings.siteTitle || 'MovieDownload'}
+                className="h-8 sm:h-9 w-auto max-w-[170px] object-contain drop-shadow-xs"
+                onError={(e) => {
+                  e.currentTarget.style.display = 'none';
+                  const fb = document.getElementById('series-detail-logo-fallback');
+                  if (fb) fb.style.display = 'flex';
+                }}
+              />
+            ) : null}
+            <div 
+              id="series-detail-logo-fallback"
+              className={`items-center gap-1.5 ${settings?.headerLogoUrl ? 'hidden' : 'flex'}`}
             >
-              <ChevronLeft className="w-5 h-5 text-gray-700" />
-            </button>
-            <div>
-              <h2 className="text-base font-extrabold text-gray-900 leading-tight">
-                {selectedSeries.category.includes('South') || selectedSeries.title.includes('কেজিএফ') 
-                  ? 'মুভি ও ভিডিও পর্বসমূহ' 
-                  : 'ক্লাস লেকচারসমূহ'}
-              </h2>
-              <p className="text-[11px] text-gray-500 font-medium truncate max-w-[220px]">
-                {selectedSeries.title}
-              </p>
+              <div className="w-7 h-7 rounded-lg bg-linear-to-tr from-amber-500 to-orange-500 flex items-center justify-center text-white shadow-2xs">
+                <Film className="w-4 h-4" />
+              </div>
+              <span className="font-black text-base tracking-tight text-gray-900">
+                Movie<span className="text-amber-500">Download</span>
+              </span>
             </div>
           </div>
 
-          <div className="flex items-center gap-1.5">
-            <span className="text-[11px] font-bold px-2.5 py-1 bg-blue-50 text-blue-700 rounded-full border border-blue-200">
-              {selectedSeries.episodes.length}টি পর্ব
-            </span>
-          </div>
+          {/* Right Spacer to keep logo perfectly centered */}
+          <div className="w-8 shrink-0" />
         </div>
 
         {/* Episodes / Classes List - Direct Match to Screenshot 1 */}
@@ -59,7 +71,8 @@ export const SeriesDetailModal: React.FC = () => {
             </div>
           ) : (
             selectedSeries.episodes.map((ep) => {
-              const thumbnailSrc = getYouTubeThumbnail(ep.youtubeId, ep.thumbnail);
+              // Automatically resolve official YouTube thumbnail
+              const thumbnailSrc = getYouTubeThumbnail(ep.youtubeId || ep.youtubeUrl, ep.thumbnail);
 
               return (
                 <div
@@ -75,7 +88,10 @@ export const SeriesDetailModal: React.FC = () => {
                       loading="lazy"
                       className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
                       onError={(e) => {
-                        e.currentTarget.src = 'https://images.unsplash.com/photo-1516321318423-f06f85e504b3?w=800';
+                        const ytId = extractYouTubeId(ep.youtubeId || ep.youtubeUrl);
+                        if (ytId && !e.currentTarget.src.includes('mqdefault')) {
+                          e.currentTarget.src = `https://img.youtube.com/vi/${ytId}/mqdefault.jpg`;
+                        }
                       }}
                     />
 

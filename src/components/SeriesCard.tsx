@@ -1,7 +1,7 @@
-import React from 'react';
 import { Series } from '../types';
 import { useMovieContext } from '../context/MovieContext';
 import { PlayCircle } from 'lucide-react';
+import { getYouTubeThumbnail, extractYouTubeId } from '../utils/youtube';
 
 interface SeriesCardProps {
   series: Series;
@@ -28,6 +28,14 @@ export const SeriesCard: React.FC<SeriesCardProps> = ({ series }) => {
 
   const badgeText = series.badgeLabel || `ইউটিউব ভিডিও সিরিজ • ${series.episodes?.length || 1} পর্ব`;
 
+  // Auto YouTube thumbnail from first episode if available
+  const autoYtThumb = series.episodes?.[0] 
+    ? getYouTubeThumbnail(series.episodes[0].youtubeId || series.episodes[0].youtubeUrl) 
+    : '';
+  const posterSrc = (series.poster && !series.poster.includes('unsplash.com')) 
+    ? series.poster 
+    : (autoYtThumb || series.poster || 'https://images.unsplash.com/photo-1518676590629-3dcbd9c5a5c9?w=300');
+
   return (
     <div 
       onClick={() => setSelectedSeries(series)}
@@ -36,12 +44,18 @@ export const SeriesCard: React.FC<SeriesCardProps> = ({ series }) => {
       {/* Series Square Poster */}
       <div className="w-[72px] h-[72px] sm:w-20 sm:h-20 shrink-0 rounded-md overflow-hidden bg-gray-900 border border-gray-200/80 shadow-2xs relative">
         <img
-          src={series.poster || 'https://images.unsplash.com/photo-1518676590629-3dcbd9c5a5c9?w=300'}
+          src={posterSrc}
           alt={series.title}
           loading="lazy"
           className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-200"
           onError={(e) => {
-            e.currentTarget.src = 'https://images.unsplash.com/photo-1518676590629-3dcbd9c5a5c9?w=300';
+            const firstEp = series.episodes?.[0];
+            const cleanId = firstEp ? extractYouTubeId(firstEp.youtubeId || firstEp.youtubeUrl) : '';
+            if (cleanId && !e.currentTarget.src.includes('mqdefault')) {
+              e.currentTarget.src = `https://img.youtube.com/vi/${cleanId}/mqdefault.jpg`;
+            } else {
+              e.currentTarget.src = 'https://images.unsplash.com/photo-1518676590629-3dcbd9c5a5c9?w=300';
+            }
           }}
         />
 

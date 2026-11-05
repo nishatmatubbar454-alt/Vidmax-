@@ -43,21 +43,26 @@ export const SeriesPlayerModal: React.FC = () => {
 
           {/* Center Brand / Logo (Screenshot 2 center) */}
           <div className="flex items-center gap-1.5 cursor-pointer" onClick={handleReturnToSeriesList}>
-            {settings.headerLogoUrl ? (
+            {settings?.headerLogoUrl ? (
               <img
                 src={settings.headerLogoUrl}
-                alt={settings.siteTitle}
-                className="h-7 w-auto object-contain"
+                alt={settings.siteTitle || 'MovieDownload'}
+                className="h-7 w-auto object-contain drop-shadow-xs"
                 onError={(e) => {
                   e.currentTarget.style.display = 'none';
+                  const fb = document.getElementById('player-modal-logo-fallback');
+                  if (fb) fb.style.display = 'flex';
                 }}
               />
-            ) : (
-              <div className="flex items-center gap-1">
-                <span className="text-sm font-black text-blue-600 tracking-tight">Smart</span>
-                <span className="text-sm font-black text-amber-500 tracking-tight">Study</span>
-              </div>
-            )}
+            ) : null}
+            <div 
+              id="player-modal-logo-fallback"
+              className={`items-center gap-1 ${settings?.headerLogoUrl ? 'hidden' : 'flex'}`}
+            >
+              <span className="text-sm font-black text-gray-900 tracking-tight">
+                Movie<span className="text-amber-500">Download</span>
+              </span>
+            </div>
           </div>
 
           {/* Right Status Badge: "ভিডিও চলছে" (Screenshot 2 right) */}

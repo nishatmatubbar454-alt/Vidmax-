@@ -47,6 +47,12 @@ service cloud.firestore {
       allow write: if isValidId(trackId);
     }
 
+    // YouTube Video & Movie Series
+    match /series/{seriesId} {
+      allow read: if true;
+      allow write: if isValidId(seriesId);
+    }
+
     // App Shortcuts / Apps Hub collection
     match /app_shortcuts/{shortcutId} {
       allow read: if true;

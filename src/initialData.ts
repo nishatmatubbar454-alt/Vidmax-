@@ -750,9 +750,9 @@ export const INITIAL_SERIES: Series[] = [
         episodeNumber: 1,
         title: 'লেকচার ১: বিশ্ব ও বাংলাদেশ প্রেক্ষিত - প্রাথমিক পরিচিতি ও মূল কনসেপ্ট',
         badge: 'প্রথম অধ্যায় • আইসিটি (ICT)',
-        youtubeUrl: 'https://www.youtube.com/watch?v=0h2hFmQ6c6w',
-        youtubeId: '0h2hFmQ6c6w',
-        thumbnail: 'https://images.unsplash.com/photo-1516321318423-f06f85e504b3?w=800&auto=format&fit=crop&q=80',
+        youtubeUrl: 'https://www.youtube.com/watch?v=kJQP7kiw5Fk',
+        youtubeId: 'kJQP7kiw5Fk',
+        thumbnail: 'https://img.youtube.com/vi/kJQP7kiw5Fk/hqdefault.jpg',
         duration: '22:15',
         description: 'প্রথম অধ্যায়ের সম্পূর্ণ বেসিক আলোচনা ও বোর্ড পরীক্ষার প্রস্তুতি।'
       },
@@ -763,7 +763,7 @@ export const INITIAL_SERIES: Series[] = [
         badge: 'প্রথম অধ্যায় • আইসিটি (ICT)',
         youtubeUrl: 'https://www.youtube.com/watch?v=kqtD5dpn9C8',
         youtubeId: 'kqtD5dpn9C8',
-        thumbnail: 'https://images.unsplash.com/photo-1497633762265-9d179a990aa6?w=800&auto=format&fit=crop&q=80',
+        thumbnail: 'https://img.youtube.com/vi/kqtD5dpn9C8/hqdefault.jpg',
         duration: '28:40',
         description: 'দ্বিতীয় লেকচারে গুরুত্বপূর্ণ সূত্র ও প্র্যাকটিক্যাল উদাহরণসমূহ।'
       },
@@ -774,7 +774,7 @@ export const INITIAL_SERIES: Series[] = [
         badge: 'পঞ্চম অধ্যায় • প্রোগ্রামিং ভাষা',
         youtubeUrl: 'https://www.youtube.com/watch?v=kJQP7kiw5Fk',
         youtubeId: 'kJQP7kiw5Fk',
-        thumbnail: 'https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?w=800&auto=format&fit=crop&q=80',
+        thumbnail: 'https://img.youtube.com/vi/kJQP7kiw5Fk/hqdefault.jpg',
         duration: '34:20',
         description: 'প্রোগ্রামিং ভাষার প্রাথমিক ধারণা ও অনুবাদক প্রোগ্রাম আলোচনা।'
       }
@@ -800,7 +800,7 @@ export const INITIAL_SERIES: Series[] = [
         badge: 'পার্ট ১ • ফুল এইচডি',
         youtubeUrl: 'https://www.youtube.com/watch?v=-KfsY-qw9YT',
         youtubeId: '-KfsY-qw9YT',
-        thumbnail: 'https://images.unsplash.com/photo-1574375927938-d5a98e8ffe85?w=800&auto=format&fit=crop&q=80',
+        thumbnail: 'https://img.youtube.com/vi/-KfsY-qw9YT/hqdefault.jpg',
         duration: '2h 35min',
         description: 'রকি কীভাবে মুম্বাইয়ের গলি থেকে কেজিএফ-এর অধিপতি হয়ে ওঠে।'
       },
@@ -811,7 +811,7 @@ export const INITIAL_SERIES: Series[] = [
         badge: 'পার্ট ২ • ফাইনাল যুদ্ধ',
         youtubeUrl: 'https://www.youtube.com/watch?v=Qah9sSIXitI',
         youtubeId: 'Qah9sSIXitI',
-        thumbnail: 'https://images.unsplash.com/photo-1518676590629-3dcbd9c5a5c9?w=800&auto=format&fit=crop&q=80',
+        thumbnail: 'https://img.youtube.com/vi/Qah9sSIXitI/hqdefault.jpg',
         duration: '2h 48min',
         description: 'অধীরা ও রমিকাসেনের বিরুদ্ধে রকির রক্তক্ষয়ী সাম্রাজ্য রক্ষার চূড়ান্ত লড়াই।'
       }

@@ -1,0 +1,159 @@
+{
+  "entities": {
+    "Movie": {
+      "title": "Movie",
+      "description": "Movie item with download links and streaming details",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "title": { "type": "string", "maxLength": 300 },
+        "poster": { "type": "string", "maxLength": 1000 },
+        "category": { "type": "string", "maxLength": 50 },
+        "genres": { "type": "string", "maxLength": 200 },
+        "year": { "type": "string", "maxLength": 10 },
+        "quality": { "type": "string", "maxLength": 100 },
+        "audio": { "type": "string", "maxLength": 100 },
+        "teraboxUrl": { "type": "string", "maxLength": 1000 },
+        "driveUrl": { "type": "string", "maxLength": 1000 },
+        "fastDownloadUrl": { "type": "string", "maxLength": 1000 },
+        "streamUrl": { "type": "string", "maxLength": 1000 },
+        "description": { "type": "string", "maxLength": 2000 },
+        "rating": { "type": "string", "maxLength": 10 },
+        "views": { "type": "number" },
+        "featured": { "type": "boolean" },
+        "createdAt": { "type": "string", "maxLength": 50 }
+      },
+      "required": ["title", "category"]
+    },
+    "Announcement": {
+      "title": "Announcement",
+      "description": "App notification or banner text",
+      "type": "object",
+      "properties": {
+        "title": { "type": "string", "maxLength": 200 },
+        "content": { "type": "string", "maxLength": 1000 },
+        "version": { "type": "string", "maxLength": 50 },
+        "apkUrl": { "type": "string", "maxLength": 1000 },
+        "forceUpdate": { "type": "boolean" },
+        "active": { "type": "boolean" },
+        "updatedAt": { "type": "string", "maxLength": 50 }
+      },
+      "required": ["title"]
+    },
+    "SponsoredBanner": {
+      "title": "SponsoredBanner",
+      "description": "Sponsored ads or promotional links shown in the feed",
+      "type": "object",
+      "properties": {
+        "title": { "type": "string", "maxLength": 200 },
+        "tag": { "type": "string", "maxLength": 50 },
+        "imageUrl": { "type": "string", "maxLength": 1000 },
+        "targetUrl": { "type": "string", "maxLength": 1000 },
+        "active": { "type": "boolean" }
+      },
+      "required": ["title"]
+    },
+    "SiteSettings": {
+      "title": "SiteSettings",
+      "description": "Global website configuration and URLs",
+      "type": "object",
+      "properties": {
+        "siteName": { "type": "string", "maxLength": 100 },
+        "logoText": { "type": "string", "maxLength": 100 },
+        "logoUrl": { "type": "string", "maxLength": 1000 },
+        "telegramUrl": { "type": "string", "maxLength": 1000 },
+        "movieDownloadUrl": { "type": "string", "maxLength": 1000 },
+        "banglaAdultUrl": { "type": "string", "maxLength": 1000 },
+        "apkDownloadUrl": { "type": "string", "maxLength": 1000 },
+        "adminPasswordHash": { "type": "string", "maxLength": 100 }
+      }
+    },
+    "AppShortcut": {
+      "title": "AppShortcut",
+      "description": "App shortcut item in Favorite or Paisa Kamao grid",
+      "type": "object",
+      "properties": {
+        "title": { "type": "string", "maxLength": 100 },
+        "url": { "type": "string", "maxLength": 1000 },
+        "iconUrl": { "type": "string", "maxLength": 1000 },
+        "section": { "type": "string", "maxLength": 50 },
+        "badge": { "type": "string", "maxLength": 50 },
+        "order": { "type": "number" },
+        "active": { "type": "boolean" },
+        "createdAt": { "type": "string", "maxLength": 50 }
+      },
+      "required": ["title", "url", "iconUrl"]
+    },
+    "TestDoc": {
+      "title": "TestDoc",
+      "description": "Healthcheck and connectivity probe document",
+      "type": "object",
+      "properties": {
+        "status": { "type": "string", "maxLength": 50 }
+      }
+    },
+    "ApkAnalytics": {
+      "title": "ApkAnalytics",
+      "description": "Aggregate download and device statistics",
+      "type": "object",
+      "properties": {
+        "totalDownloads": { "type": "number" },
+        "totalDevices": { "type": "number" },
+        "activeDevices": { "type": "number" },
+        "lastUpdated": { "type": "string", "maxLength": 50 }
+      }
+    },
+    "InstalledDevice": {
+      "title": "InstalledDevice",
+      "description": "Individual installed phone / device tracking record",
+      "type": "object",
+      "properties": {
+        "deviceId": { "type": "string", "maxLength": 128 },
+        "platform": { "type": "string", "maxLength": 50 },
+        "deviceModel": { "type": "string", "maxLength": 100 },
+        "appVersion": { "type": "string", "maxLength": 50 },
+        "isApk": { "type": "boolean" },
+        "installedAt": { "type": "string", "maxLength": 50 },
+        "lastSeen": { "type": "string", "maxLength": 50 },
+        "totalOpens": { "type": "number" },
+        "screenResolution": { "type": "string", "maxLength": 50 },
+        "language": { "type": "string", "maxLength": 50 }
+      },
+      "required": ["deviceId"]
+    }
+  },
+  "firestore": {
+    "/movies/{movieId}": {
+      "schema": { "$ref": "#/entities/Movie" },
+      "description": "Collection of movies and series"
+    },
+    "/site_settings/{settingId}": {
+      "schema": { "$ref": "#/entities/SiteSettings" },
+      "description": "Global site configurations"
+    },
+    "/announcements/{announcementId}": {
+      "schema": { "$ref": "#/entities/Announcement" },
+      "description": "System and APK update announcements"
+    },
+    "/sponsored/{bannerId}": {
+      "schema": { "$ref": "#/entities/SponsoredBanner" },
+      "description": "Configurable sponsored banners"
+    },
+    "/app_shortcuts/{shortcutId}": {
+      "schema": { "$ref": "#/entities/AppShortcut" },
+      "description": "Collection of app shortcuts and games"
+    },
+    "/apk_analytics/{docId}": {
+      "schema": { "$ref": "#/entities/ApkAnalytics" },
+      "description": "APK downloads and aggregate statistics"
+    },
+    "/installed_devices/{deviceId}": {
+      "schema": { "$ref": "#/entities/InstalledDevice" },
+      "description": "Registered devices with installation metadata"
+    },
+    "/test/{testId}": {
+      "schema": { "$ref": "#/entities/TestDoc" },
+      "description": "Diagnostic and test connection documents"
+    }
+  }
+}

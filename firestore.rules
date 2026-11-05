@@ -1,0 +1,73 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    // Default-deny catch-all
+    match /{document=**} {
+      allow read, write: if false;
+    }
+
+    function isValidId(id) {
+      return id is string && id.size() <= 128 && id.matches('^[a-zA-Z0-9_\\-]+$');
+    }
+
+    // Movies collection: Public read so all app users can browse catalog
+    match /movies/{movieId} {
+      allow read: if true;
+      allow create, update: if isValidId(movieId) &&
+        request.resource.data.title is string && request.resource.data.title.size() <= 300 &&
+        request.resource.data.category is string && request.resource.data.category.size() <= 50;
+      allow delete: if isValidId(movieId);
+    }
+
+    // Site settings: Public read, allow updates from admin
+    match /site_settings/{settingId} {
+      allow read: if true;
+      allow write: if isValidId(settingId);
+    }
+
+    // Announcements & App update metadata
+    match /announcements/{announcementId} {
+      allow read: if true;
+      allow create, update: if isValidId(announcementId) &&
+        request.resource.data.title is string && request.resource.data.title.size() <= 200;
+      allow delete: if isValidId(announcementId);
+    }
+
+    // Sponsored ad banners
+    match /sponsored/{bannerId} {
+      allow read: if true;
+      allow create, update: if isValidId(bannerId) &&
+        request.resource.data.title is string && request.resource.data.title.size() <= 200;
+      allow delete: if isValidId(bannerId);
+    }
+
+    // YouTube Music tracks catalog
+    match /music_tracks/{trackId} {
+      allow read: if true;
+      allow write: if isValidId(trackId);
+    }
+
+    // App Shortcuts / Apps Hub collection
+    match /app_shortcuts/{shortcutId} {
+      allow read: if true;
+      allow write: if isValidId(shortcutId);
+    }
+
+    // APK analytics & metrics
+    match /apk_analytics/{docId} {
+      allow read: if true;
+      allow write: if isValidId(docId);
+    }
+
+    // Installed phones and devices tracking
+    match /installed_devices/{deviceId} {
+      allow read: if true;
+      allow write: if isValidId(deviceId);
+    }
+
+    // Healthcheck and connection probe
+    match /test/{testId} {
+      allow read, write: if true;
+    }
+  }
+}

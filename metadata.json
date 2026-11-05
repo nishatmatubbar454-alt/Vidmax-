@@ -1,0 +1,6 @@
+{
+  "name": "CineStream BD - Movies & Web Series",
+  "description": "Live Firebase-powered cinema and web series streaming platform with real-time updates and APK mobile experience.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

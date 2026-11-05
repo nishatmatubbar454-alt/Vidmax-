@@ -734,49 +734,38 @@ export const INITIAL_APP_SHORTCUTS: AppShortcut[] = [
 
 export const INITIAL_SERIES: Series[] = [
   {
-    id: 'series-hsc-ict',
-    title: 'এইচএসসি প্রোগ্রামিং ও আইসিটি ভিডিও সিরিজ (HSC ICT Complete Video Class)',
+    id: 'series-pushpa-saga',
+    title: 'পুষ্পা মেগা ব্লকবাস্টার সিরিজ (Pushpa The Saga Hindi Dubbed)',
     category: 'South Hindi Dubbed',
-    badgeLabel: 'YouTube Exclusive Series • ৩টি ক্লাস',
-    badgeColor: 'blue',
-    poster: 'https://images.unsplash.com/photo-1517694712202-14dd9538aa97?w=600&auto=format&fit=crop&q=80',
+    badgeLabel: 'মুভি সিরিজ • ২ পর্ব',
+    badgeColor: 'orange',
+    poster: 'https://img.youtube.com/vi/Q1NKMPhP8PY/hqdefault.jpg',
     year: '2026',
     quality: 'Full HD 1080p',
-    description: 'এইচএসসি শিক্ষার্থীদের জন্য সম্পূর্ণ আইসিটি ও প্রোগ্রামিং ভাষা চ্যাপ্টারভিত্তিক ভিডিও লেকচার সিরিজ।',
+    description: 'পুষ্পার রাজত্ব ও রক্তচন্দনের রোমাঞ্চকর হিন্দি ডাবড মুভি সিরিজ।',
     isYouTubeSeries: true,
     episodes: [
       {
-        id: 'ep-hsc-1',
+        id: 'pushpa-part-1',
         episodeNumber: 1,
-        title: 'লেকচার ১: বিশ্ব ও বাংলাদেশ প্রেক্ষিত - প্রাথমিক পরিচিতি ও মূল কনসেপ্ট',
-        badge: 'প্রথম অধ্যায় • আইসিটি (ICT)',
-        youtubeUrl: 'https://www.youtube.com/watch?v=kJQP7kiw5Fk',
-        youtubeId: 'kJQP7kiw5Fk',
-        thumbnail: 'https://img.youtube.com/vi/kJQP7kiw5Fk/hqdefault.jpg',
-        duration: '22:15',
-        description: 'প্রথম অধ্যায়ের সম্পূর্ণ বেসিক আলোচনা ও বোর্ড পরীক্ষার প্রস্তুতি।'
+        title: 'পর্ব ১: Pushpa: The Rise (হিন্দি ডাবড ব্লকবাস্টার)',
+        badge: 'পার্ট ১ • ফুল এইচডি',
+        youtubeUrl: 'https://www.youtube.com/watch?v=Q1NKMPhP8PY',
+        youtubeId: 'Q1NKMPhP8PY',
+        thumbnail: 'https://img.youtube.com/vi/Q1NKMPhP8PY/hqdefault.jpg',
+        duration: '2:59:00',
+        description: 'পুষ্পার উত্থানের অবিস্মরণীয় গল্প।'
       },
       {
-        id: 'ep-hsc-2',
+        id: 'pushpa-part-2',
         episodeNumber: 2,
-        title: 'লেকচার ২: বিশ্ব ও বাংলাদেশ প্রেক্ষিত - গুরুত্বপূর্ণ সূত্র ও বেসিক নিয়মাবলী',
-        badge: 'প্রথম অধ্যায় • আইসিটি (ICT)',
-        youtubeUrl: 'https://www.youtube.com/watch?v=kqtD5dpn9C8',
-        youtubeId: 'kqtD5dpn9C8',
-        thumbnail: 'https://img.youtube.com/vi/kqtD5dpn9C8/hqdefault.jpg',
-        duration: '28:40',
-        description: 'দ্বিতীয় লেকচারে গুরুত্বপূর্ণ সূত্র ও প্র্যাকটিক্যাল উদাহরণসমূহ।'
-      },
-      {
-        id: 'ep-hsc-3',
-        episodeNumber: 3,
-        title: 'লেকচার ৩: প্রোগ্রামিং ভাষা - অনুবাদক প্রোগ্রাম (কম্পাইলার, ইন্টারপ্রেটার ও অ্যাসেম্বলার)',
-        badge: 'পঞ্চম অধ্যায় • প্রোগ্রামিং ভাষা',
-        youtubeUrl: 'https://www.youtube.com/watch?v=kJQP7kiw5Fk',
-        youtubeId: 'kJQP7kiw5Fk',
-        thumbnail: 'https://img.youtube.com/vi/kJQP7kiw5Fk/hqdefault.jpg',
-        duration: '34:20',
-        description: 'প্রোগ্রামিং ভাষার প্রাথমিক ধারণা ও অনুবাদক প্রোগ্রাম আলোচনা।'
+        title: 'পর্ব ২: Pushpa 2: The Rule (হিন্দি ডাবড মেগা ড্রামা)',
+        badge: 'পার্ট ২ • ফুল এইচডি',
+        youtubeUrl: 'https://www.youtube.com/watch?v=1kVK0MZlbI4',
+        youtubeId: '1kVK0MZlbI4',
+        thumbnail: 'https://img.youtube.com/vi/1kVK0MZlbI4/hqdefault.jpg',
+        duration: '3:15:00',
+        description: 'পুষ্পা রাজের দাপট ও সাম্রাজ্য বিস্তারের চূড়ান্ত অধ্যায়।'
       }
     ],
     createdAt: new Date().toISOString()

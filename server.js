@@ -21,6 +21,45 @@ if (!fs.existsSync(distDir) || !fs.existsSync(path.join(distDir, 'index.html')))
   }
 }
 
+// Body parsers for image upload
+app.use(express.json({ limit: '20mb' }));
+app.use(express.urlencoded({ extended: true, limit: '20mb' }));
+
+// Ensure public/uploads directory exists
+const uploadsDir = path.resolve(__dirname, 'public/uploads');
+if (!fs.existsSync(uploadsDir)) {
+  fs.mkdirSync(uploadsDir, { recursive: true });
+}
+app.use('/uploads', express.static(uploadsDir));
+
+// Image Upload Endpoint (Permanent local hosting)
+app.post('/api/upload-image', (req, res) => {
+  try {
+    let base64 = req.body?.base64 || '';
+    if (base64.includes(',')) {
+      base64 = base64.split(',')[1];
+    }
+
+    if (!base64) {
+      return res.status(400).json({ error: 'No image data provided' });
+    }
+
+    const ext = req.body?.ext || 'jpg';
+    const filename = `movie_img_${Date.now()}_${Math.random().toString(36).slice(2, 7)}.${ext}`;
+    const filePath = path.join(uploadsDir, filename);
+
+    fs.writeFileSync(filePath, Buffer.from(base64, 'base64'));
+
+    return res.status(200).json({
+      success: true,
+      url: `/uploads/${filename}`
+    });
+  } catch (err) {
+    console.error('Upload image error:', err);
+    return res.status(500).json({ error: err.message });
+  }
+});
+
 // 1. Direct APK Download Stream with proper Android MIME type
 app.get(['/api/download-apk', '/CineStreamBD_v2.1.0.apk'], (req, res) => {
   const distApk = path.join(distDir, 'CineStreamBD_v2.1.0.apk');

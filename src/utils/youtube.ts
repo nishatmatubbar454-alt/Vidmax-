@@ -37,5 +37,11 @@ export function getYouTubeThumbnail(urlOrId: string, customThumbnail?: string): 
 export function getYouTubeEmbedUrl(youtubeIdOrUrl: string, autoplay = true): string {
   const cleanId = extractYouTubeId(youtubeIdOrUrl);
   if (!cleanId) return '';
-  return `https://www.youtube-nocookie.com/embed/${cleanId}?autoplay=${autoplay ? 1 : 0}&rel=0&modestbranding=1&playsinline=1&enablejsapi=1`;
+  // Enhanced security parameters:
+  // - rel=0: No related videos from outside channel
+  // - modestbranding=1: Hide YouTube logo from control bar
+  // - iv_load_policy=3: Hide video annotations, subscribe cards, and channel overlays
+  // - playsinline=1: Force mobile inline play without opening external app
+  // - enablejsapi=1: Internal control
+  return `https://www.youtube-nocookie.com/embed/${cleanId}?autoplay=${autoplay ? 1 : 0}&rel=0&modestbranding=1&iv_load_policy=3&playsinline=1&enablejsapi=1`;
 }

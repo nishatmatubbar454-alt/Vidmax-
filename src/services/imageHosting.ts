@@ -22,8 +22,8 @@ export interface ImgBBUploadResponse {
  */
 export async function compressImageToDataUrl(
   fileOrBlob: File | Blob,
-  maxDim = 600,
-  quality = 0.7
+  maxDim = 450,
+  quality = 0.65
 ): Promise<string> {
   // 1. Try hardware-accelerated createImageBitmap if supported (zero JS heap bloat)
   if (typeof window !== 'undefined' && 'createImageBitmap' in window) {

@@ -30,38 +30,39 @@ export const SeriesPlayerModal: React.FC = () => {
         className="w-full max-w-md bg-gray-50 min-h-screen flex flex-col shadow-2xl relative border-x border-gray-200"
         onClick={(e) => e.stopPropagation()}
       >
-        {/* Top Header - Exact match to Screenshot 2 */}
+        {/* Top Header */}
         <div className="sticky top-0 z-20 bg-white/95 backdrop-blur-md px-3.5 py-2.5 flex items-center justify-between border-b border-gray-200 shadow-2xs">
-          {/* Circular Back Button (Screenshot 2 left) */}
-          <button
-            onClick={handleReturnToSeriesList}
-            className="w-8 h-8 rounded-full bg-gray-100 hover:bg-gray-200 text-gray-700 flex items-center justify-center transition-colors cursor-pointer shrink-0 shadow-2xs"
-            title="তালিকায় ফিরে যান"
-          >
-            <ChevronLeft className="w-5 h-5 text-gray-700" />
-          </button>
-
-          {/* Center Brand / Logo (Screenshot 2 center) */}
-          <div className="flex items-center gap-1.5 cursor-pointer" onClick={handleReturnToSeriesList}>
-            {settings?.headerLogoUrl ? (
-              <img
-                src={settings.headerLogoUrl}
-                alt={settings.siteTitle || 'MovieDownload'}
-                className="h-7 w-auto object-contain drop-shadow-xs"
-                onError={(e) => {
-                  e.currentTarget.style.display = 'none';
-                  const fb = document.getElementById('player-modal-logo-fallback');
-                  if (fb) fb.style.display = 'flex';
-                }}
-              />
-            ) : null}
-            <div 
-              id="player-modal-logo-fallback"
-              className={`items-center gap-1 ${settings?.headerLogoUrl ? 'hidden' : 'flex'}`}
+          {/* Back Button & Brand Logo side-by-side on left */}
+          <div className="flex items-center gap-2.5">
+            <button
+              onClick={handleReturnToSeriesList}
+              className="w-8 h-8 rounded-full bg-gray-100 hover:bg-gray-200 text-gray-700 flex items-center justify-center transition-colors cursor-pointer shrink-0 shadow-2xs"
+              title="তালিকায় ফিরে যান"
             >
-              <span className="text-sm font-black text-gray-900 tracking-tight">
-                Movie<span className="text-amber-500">Download</span>
-              </span>
+              <ChevronLeft className="w-5 h-5 text-gray-700" />
+            </button>
+
+            <div className="flex items-center cursor-pointer" onClick={handleReturnToSeriesList}>
+              {settings?.headerLogoUrl ? (
+                <img
+                  src={settings.headerLogoUrl}
+                  alt={settings.siteTitle || 'MovieDownload'}
+                  className="h-8 sm:h-9 w-auto max-w-[170px] object-contain drop-shadow-xs"
+                  onError={(e) => {
+                    e.currentTarget.style.display = 'none';
+                    const fb = document.getElementById('player-modal-logo-fallback');
+                    if (fb) fb.style.display = 'flex';
+                  }}
+                />
+              ) : null}
+              <div 
+                id="player-modal-logo-fallback"
+                className={`items-center gap-1 ${settings?.headerLogoUrl ? 'hidden' : 'flex'}`}
+              >
+                <span className="text-sm font-black text-gray-900 tracking-tight">
+                  Movie<span className="text-amber-500">Download</span>
+                </span>
+              </div>
             </div>
           </div>
 
@@ -77,16 +78,42 @@ export const SeriesPlayerModal: React.FC = () => {
 
         {/* Scrollable Content Container */}
         <div className="flex-1 p-3.5 space-y-3 pb-20">
-          {/* Video Player Card Container - Matching Screenshot 2 */}
-          <div className="bg-black rounded-2xl overflow-hidden shadow-lg border border-gray-800 relative aspect-video w-full">
+          {/* Video Player Card Container with Full Security Shields */}
+          <div className="bg-black rounded-2xl overflow-hidden shadow-lg border border-gray-800 relative aspect-video w-full select-none">
             {embedUrl ? (
-              <iframe
-                src={embedUrl}
-                title={episode.title}
-                className="w-full h-full border-0"
-                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                allowFullScreen
-              />
+              <>
+                <iframe
+                  src={embedUrl}
+                  title={episode.title}
+                  className="w-full h-full border-0 relative z-0"
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                  sandbox="allow-scripts allow-same-origin allow-presentation"
+                  allowFullScreen
+                />
+
+                {/* Top Security Shield: Blocks channel icon, video title, copy link & watch later */}
+                <div 
+                  className="absolute top-0 inset-x-0 h-14 z-20 cursor-default select-none pointer-events-auto bg-transparent"
+                  onClick={(e) => { e.stopPropagation(); e.preventDefault(); }}
+                  onTouchStart={(e) => { e.stopPropagation(); }}
+                  title="ভিডিও প্লেয়ার"
+                />
+
+                {/* Bottom-Right Security Shield: Blocks clicking the YouTube logo and external navigation */}
+                <div 
+                  className="absolute bottom-0 right-0 w-36 h-12 z-20 cursor-default select-none pointer-events-auto bg-transparent"
+                  onClick={(e) => { e.stopPropagation(); e.preventDefault(); }}
+                  onTouchStart={(e) => { e.stopPropagation(); }}
+                  title="ভিডিও প্লেয়ার"
+                />
+
+                {/* Bottom-Left Security Shield: Blocks clicking share / copy links */}
+                <div 
+                  className="absolute bottom-0 left-0 w-24 h-12 z-20 cursor-default select-none pointer-events-auto bg-transparent"
+                  onClick={(e) => { e.stopPropagation(); e.preventDefault(); }}
+                  onTouchStart={(e) => { e.stopPropagation(); }}
+                />
+              </>
             ) : (
               <div className="w-full h-full flex flex-col items-center justify-center text-white p-4 text-center">
                 <Radio className="w-8 h-8 text-red-500 mb-2 animate-pulse" />
@@ -95,38 +122,28 @@ export const SeriesPlayerModal: React.FC = () => {
             )}
           </div>
 
-          {/* Episode Info Box - Matching Screenshot 2 */}
+          {/* Clean Episode Title Box - Book lecture text removed as requested */}
           <div className="bg-white rounded-2xl p-4 border border-gray-200/90 shadow-2xs">
-            {/* Pill Badge matching Screenshot 2 */}
-            <div className="mb-2">
-              <span className="inline-block text-[11px] font-bold text-amber-800 bg-amber-50 border border-amber-300 px-3 py-1 rounded-full shadow-2xs">
-                {episode.badge || series.badgeLabel || 'প্রথম অধ্যায় • আইসিটি (ICT)'}
-              </span>
-            </div>
+            {episode.badge && (
+              <div className="mb-1.5">
+                <span className="inline-block text-[11px] font-bold text-amber-800 bg-amber-50 border border-amber-300 px-3 py-0.5 rounded-full shadow-2xs">
+                  {episode.badge}
+                </span>
+              </div>
+            )}
 
-            {/* Episode Title matching Screenshot 2 */}
             <h3 className="text-sm sm:text-base font-extrabold text-gray-900 leading-snug">
               {episode.title}
             </h3>
-
-            {episode.description && (
-              <p className="text-xs text-gray-600 mt-2 leading-relaxed border-t border-gray-100 pt-2">
-                {episode.description}
-              </p>
-            )}
           </div>
 
-          {/* Return to Playlist Action Card - Exact Match to Screenshot 2 */}
+          {/* Return to Playlist Action Card */}
           <button
             onClick={handleReturnToSeriesList}
             className="w-full bg-white hover:bg-gray-50 text-amber-900 border border-amber-200/80 rounded-2xl p-3.5 shadow-2xs flex items-center justify-center gap-2 font-bold text-xs sm:text-sm transition-all duration-150 cursor-pointer active:scale-[0.99] group"
           >
             <ChevronLeft className="w-4 h-4 text-amber-600 group-hover:-translate-x-0.5 transition-transform" />
-            <span>
-              {series.category.includes('South') || series.title.includes('কেজিএফ') 
-                ? 'অন্যান্য পর্ব বা মুভি তালিকা দেখতে ফিরে যান' 
-                : 'অধ্যায়ের অন্যান্য ক্লাস তালিকা দেখতে ফিরে যান'}
-            </span>
+            <span>অন্যান্য পর্ব বা মুভি তালিকা দেখতে ফিরে যান</span>
           </button>
         </div>
       </div>

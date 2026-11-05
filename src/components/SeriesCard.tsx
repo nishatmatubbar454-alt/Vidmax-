@@ -32,9 +32,9 @@ export const SeriesCard: React.FC<SeriesCardProps> = ({ series }) => {
   const autoYtThumb = series.episodes?.[0] 
     ? getYouTubeThumbnail(series.episodes[0].youtubeId || series.episodes[0].youtubeUrl) 
     : '';
-  const posterSrc = (series.poster && !series.poster.includes('unsplash.com')) 
+  const posterSrc = series.poster?.trim() 
     ? series.poster 
-    : (autoYtThumb || series.poster || 'https://images.unsplash.com/photo-1518676590629-3dcbd9c5a5c9?w=300');
+    : (autoYtThumb || 'https://images.unsplash.com/photo-1518676590629-3dcbd9c5a5c9?w=300');
 
   return (
     <div 
@@ -47,20 +47,21 @@ export const SeriesCard: React.FC<SeriesCardProps> = ({ series }) => {
           src={posterSrc}
           alt={series.title}
           loading="lazy"
+          referrerPolicy="no-referrer"
           className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-200"
           onError={(e) => {
             const firstEp = series.episodes?.[0];
             const cleanId = firstEp ? extractYouTubeId(firstEp.youtubeId || firstEp.youtubeUrl) : '';
             if (cleanId && !e.currentTarget.src.includes('mqdefault')) {
               e.currentTarget.src = `https://img.youtube.com/vi/${cleanId}/mqdefault.jpg`;
-            } else {
-              e.currentTarget.src = 'https://images.unsplash.com/photo-1518676590629-3dcbd9c5a5c9?w=300';
+            } else if (cleanId && !e.currentTarget.src.includes('hqdefault')) {
+              e.currentTarget.src = `https://img.youtube.com/vi/${cleanId}/hqdefault.jpg`;
             }
           }}
         />
 
         {/* Small YouTube Play Indicator Overlay on corner */}
-        <div className="absolute inset-0 bg-black/20 flex items-center justify-center group-hover:bg-black/35 transition-colors">
+        <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
           <div className="w-6 h-6 rounded-full bg-red-600 text-white flex items-center justify-center shadow-md">
             <PlayCircle className="w-4 h-4 fill-white text-red-600" />
           </div>

@@ -1343,7 +1343,7 @@ export const AdminPanelModal: React.FC = () => {
                         />
                       </div>
 
-                      {/* Poster Image with ImgBB */}
+                      {/* Poster Image with Gallery / ImgBB / YouTube Thumb */}
                       <ImageUploader
                         label="*সিরিজ পোস্টার ইমেজ (Square Poster) *"
                         value={seriesForm.poster || ''}
@@ -1351,6 +1351,17 @@ export const AdminPanelModal: React.FC = () => {
                         apiKey={settings.imgbbApiKey}
                         placeholder="পোস্টার ছবির লিংক বা ImgBB-তে আপলোড করুন"
                         description="হোম ফিডে মুভি কার্ডের মতো স্কয়ার পোস্টার হিসেবে প্রদর্শিত হবে।"
+                        onUseYouTubeThumb={() => {
+                          const firstEp = seriesEpisodes[0];
+                          const ytId = firstEp?.youtubeId || extractYouTubeId(firstEp?.youtubeUrl);
+                          if (ytId) {
+                            const thumbUrl = `https://img.youtube.com/vi/${ytId}/hqdefault.jpg`;
+                            setSeriesForm(prev => ({ ...prev, poster: thumbUrl }));
+                            showToast('success', '১ম পর্বের ইউটিউব থাম্বনেল পোস্টার হিসেবে সেট হয়েছে!');
+                          } else {
+                            showToast('error', 'দয়া করে আগে ১ম পর্বের ইউটিউব লিংক দিন!');
+                          }
+                        }}
                       />
 
                       {/* Category & Badge */}

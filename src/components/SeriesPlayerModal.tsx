@@ -1,11 +1,10 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { useMovieContext } from '../context/MovieContext';
-import { ChevronLeft, Play, ArrowLeft, Radio } from 'lucide-react';
-import { getYouTubeEmbedUrl, getYouTubeThumbnail } from '../utils/youtube';
+import { ChevronLeft, Radio } from 'lucide-react';
+import { getYouTubeEmbedUrl } from '../utils/youtube';
 
 export const SeriesPlayerModal: React.FC = () => {
   const { selectedEpisode, setSelectedEpisode, setSelectedSeries, settings } = useMovieContext();
-  const [showFullPlaylist, setShowFullPlaylist] = useState(false);
 
   if (!selectedEpisode) return null;
 
@@ -124,66 +123,6 @@ export const SeriesPlayerModal: React.FC = () => {
                 : 'অধ্যায়ের অন্যান্য ক্লাস তালিকা দেখতে ফিরে যান'}
             </span>
           </button>
-
-          {/* Quick Playlist Switcher: Other Episodes in this Series */}
-          {series.episodes && series.episodes.length > 1 && (
-            <div className="bg-white rounded-2xl p-3 border border-gray-200/90 shadow-2xs">
-              <div className="flex items-center justify-between mb-2 px-1">
-                <span className="text-xs font-extrabold text-gray-800">
-                  সিরিজের অন্যান্য পর্বসমূহ ({series.episodes.length}টি)
-                </span>
-                <span className="text-[10px] text-gray-500 font-semibold">
-                  ক্লিক করে প্লে করুন
-                </span>
-              </div>
-
-              <div className="space-y-2">
-                {series.episodes.map((otherEp) => {
-                  const isCurrent = otherEp.id === episode.id;
-                  const thumb = getYouTubeThumbnail(otherEp.youtubeId, otherEp.thumbnail);
-
-                  return (
-                    <div
-                      key={otherEp.id}
-                      onClick={() => setSelectedEpisode({ series, episode: otherEp })}
-                      className={`flex items-center gap-2.5 p-2 rounded-xl transition-all cursor-pointer border ${
-                        isCurrent 
-                          ? 'bg-amber-50/80 border-amber-300 ring-1 ring-amber-300' 
-                          : 'bg-gray-50 hover:bg-gray-100 border-gray-200'
-                      }`}
-                    >
-                      <div className="relative w-18 aspect-video rounded-lg overflow-hidden bg-black shrink-0">
-                        <img 
-                          src={thumb} 
-                          alt={otherEp.title}
-                          className="w-full h-full object-cover"
-                        />
-                        <div className="absolute inset-0 bg-black/30 flex items-center justify-center">
-                          <Play className={`w-3.5 h-3.5 ${isCurrent ? 'text-amber-500 fill-amber-500' : 'text-white fill-white'}`} />
-                        </div>
-                      </div>
-
-                      <div className="min-w-0 flex-1">
-                        <div className="flex items-center gap-1.5">
-                          <span className="text-[9px] font-bold px-1.5 py-0.2 rounded-md bg-gray-200 text-gray-700">
-                            পর্ব {otherEp.episodeNumber}
-                          </span>
-                          {isCurrent && (
-                            <span className="text-[9px] font-bold text-red-600 bg-red-50 px-1.5 py-0.2 rounded-md border border-red-200">
-                              চলছে
-                            </span>
-                          )}
-                        </div>
-                        <h5 className="text-[11px] font-bold text-gray-900 truncate mt-0.5">
-                          {otherEp.title}
-                        </h5>
-                      </div>
-                    </div>
-                  );
-                })}
-              </div>
-            </div>
-          )}
         </div>
       </div>
     </div>

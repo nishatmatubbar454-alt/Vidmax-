@@ -1,6 +1,6 @@
 import React from 'react';
 import { useMovieContext } from '../context/MovieContext';
-import { ChevronLeft, Play, Film, Sparkles } from 'lucide-react';
+import { ChevronLeft, Play, Film } from 'lucide-react';
 import { getYouTubeThumbnail } from '../utils/youtube';
 
 export const SeriesDetailModal: React.FC = () => {
@@ -47,44 +47,8 @@ export const SeriesDetailModal: React.FC = () => {
           </div>
         </div>
 
-        {/* Series Overview Banner */}
-        <div className="p-3.5 bg-gradient-to-br from-slate-900 via-slate-800 to-indigo-950 text-white shadow-xs">
-          <div className="flex gap-3 items-center">
-            <img
-              src={selectedSeries.poster}
-              alt={selectedSeries.title}
-              className="w-16 h-20 object-cover rounded-xl border border-white/20 shadow-md shrink-0 bg-slate-800"
-              onError={(e) => {
-                e.currentTarget.src = 'https://images.unsplash.com/photo-1518676590629-3dcbd9c5a5c9?w=300';
-              }}
-            />
-            <div className="min-w-0 flex-1">
-              <div className="inline-flex items-center gap-1 text-[10px] font-bold px-2 py-0.5 rounded-md bg-amber-400 text-slate-950 mb-1">
-                <Sparkles className="w-3 h-3" />
-                <span>{selectedSeries.badgeLabel || 'YouTube Exclusive Series'}</span>
-              </div>
-              <h3 className="text-sm font-extrabold text-white leading-snug line-clamp-2">
-                {selectedSeries.title}
-              </h3>
-              {selectedSeries.description && (
-                <p className="text-[11px] text-gray-300 mt-1 line-clamp-1">
-                  {selectedSeries.description}
-                </p>
-              )}
-            </div>
-          </div>
-        </div>
-
-        {/* Episodes / Classes List - Faithfully matching Screenshot 1 */}
-        <div className="flex-1 p-3.5 space-y-4 pb-20">
-          <div className="flex items-center justify-between px-1">
-            <span className="text-xs font-bold text-gray-500 uppercase tracking-wide">
-              লেকচার / পর্বের তালিকা
-            </span>
-            <span className="text-xs font-semibold text-gray-400">
-              থাম্বনেলে ক্লিক করে ভিডিও চালান
-            </span>
-          </div>
+        {/* Episodes / Classes List - Direct Match to Screenshot 1 */}
+        <div className="flex-1 p-3.5 space-y-3.5 pb-20">
 
           {selectedSeries.episodes.length === 0 ? (
             <div className="py-12 px-4 text-center bg-white rounded-2xl border border-gray-200">
